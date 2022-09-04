@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block styling %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_profile_style.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>User Profile</h1>
+
+<div class="card">
+  <div class="card-heading">
+    <h2>Account</h2>
+  </div>
+  <div class="card-body">
+    <p>Email: {{ current_user.email }}</p>
+    <p>Username: {{ current_user.username }}</p>
+    <p>Vorname: {{ current_user.first_name }}</p>
+    <p>Nachname: {{ current_user.last_name }}</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-heading">
+    <h2>Hinterlegte Zertifizierungen</h2>
+  </div>
+  <div class="card-body">
+    {% for certificate in certificate %}
+    {% if  certificate.owner == current_user.username %}
+
+    <p>{{ certificate.certificate_name }}</p>
+
+    {% endif %}
+    {% endfor %}
+    <br/><br/>
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="card-heading">
+    <h2>Account Statistics</h2>
+  </div>
+  <div class="card-body">
+    <p>Joined on {{ current_user.registered_on.strftime("%A, %B %d, %Y") }}</p>
+  </div>
+</div>
+
+{% endblock %}

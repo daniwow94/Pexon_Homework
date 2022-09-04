@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block styling %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index_style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="content-text">
+        <h1>Hey Pexonian, willst du dein Zertifikat <strong>updaten?</strong></h1>
+        <h4>der Name des zu Updatende Zertifikats lautet <b>{{certificate_to_update.certificate_name}}</b></h4>
+        <h5>gebe in das Untere Feld den neuen Namen ein</h5>
+        <br/>
+        <form action="/update/{{certificate_to_update.id}}" Method="POST">
+            <input type="text" placeholder="Name der Zertifizierung" name="certificate_name" value="{{certificate_to_update.certificate_name}}">
+            <br/><br/>
+            <input type="submit" value="Zertifizierung Updaten" class="btn btn-primary">
+        </form>
+        <br/>
+        <p><em>Hier drücken für den </em><a href="{{ url_for('users.logout') }}">Logout!</a></p>
+    </header>
+</div>
+{% endblock %}

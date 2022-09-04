@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block styling %}
+<!--<link rel="stylesheet" href="{{ url_for('static', filename='css/index_style.css') }}">-->
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="content-text">
+        <br/>
+        <h1>Hey Pexonian, hier kannst du eine Zertifizierung <b>hinzufügen</b>, <b>überarbeiten</b> oder <b>löschen</b></h1>
+        <br/>
+        <form action="/certificate" Method="POST">
+            <input type="text" placeholder="Name der Zertifizierung" name="certificate_name">
+            <br/><br/>
+            <input type="submit" value="Zertifizierung Hinzufügen" class="btn btn-primary">
+        </form>
+        <br/><br/>
+    <table class="table table-dark table-hover table-bordered table-striped border-light">
+        <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Zertifizierung</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Update</th>
+              <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        {% for certificate in certificate %}
+        <tbody>
+            <tr>
+                <th scope="row">{{ certificate.id }}</th>
+                <td>
+                  {{ certificate.certificate_name }}
+                </td>
+                <td>
+                  {{ certificate.owner }}
+                </td>
+                <td>
+                  {% if  certificate.owner == current_user.username %}
+                  <a href="/update/{{ certificate.id }}" class="btn btn-outline-warning btn-sm">Update</a>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if  certificate.owner == current_user.username %}
+                  <a href="/delete/{{ certificate.id }}" class="btn btn-outline-danger btn-sm">Delete</a>
+                  {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br/><br/>
+        <p><em>Hier drücken für den </em><a href="{{ url_for('users.logout') }}">Logout!</a></p>
+    </header>
+</div>
+{% endblock %}
